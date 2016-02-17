@@ -19,7 +19,7 @@
 
 			var _task = setInterval(function(){
 				getStock();
-			},10000);
+			},5000);
 		});
 	</script>
 </head>
