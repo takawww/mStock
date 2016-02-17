@@ -16,5 +16,5 @@
     <author email="takawong@aisoft.com.hk">
         Taka Wong 
     </author>
-	<access origin=".*"/>
+	<access origin="*"/>
 </widget>
