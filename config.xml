@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.phonegap.example"
+        versionCode = "10" 
+        version     = "1.0.0" >
 
-<widget xmlns="https://www.w3.org/ns/widgets"
-		xmlns:gap = "http://phonegap.con/ns/1.0"
-		id="hk.com.aisoft.mStock"
-		versionCode="1"
-		version="1.0.0">
-	
-	<name>mStock</name>
-	<description>Stock Index and Price</description>
-	<author email="takawong@aisoft.com.hk">
-		Taka Wong
-	</author>
-	<access origin="*" />
-	<perference name="orientation" value="landscape"/>
-	<perference name="fullscreen" value="false"/>
+    <!-- versionCode is optional and Android only -->
+
+    <name>mStock</name>
+
+    <description>
+        An example for phonegap build. 
+    </description>
+
+    <author email="takawong@aisoft.com.hk">
+        Taka Wong 
+    </author>
 
 </widget>
