@@ -15,7 +15,7 @@
 		var stockIndexs;
 		var stockPrices;
 		$(document).ready(function() {
-			getStock();
+			call_ajax();
 
 			//var _task = setInterval(function(){
 			//getStock();
