@@ -1,0 +1,30 @@
+<html>
+<head>
+	<title>Silly Simple</title>
+	<link href="css/style.css"rel="stylesheet" />
+	<script type="text/javascript" src="js/stockFunc.js"></script>
+	<script type="text/javascript" src="js/zepto.min.js"></script>
+	<script>
+		var stockIndexs;
+		var stockPrices;
+
+	</script>
+</head>
+<body>
+	<div class="divHeader">
+		<div class="divIndexContainer">
+		</div>
+	</div>
+	<div class="divBody">
+		<div class="divStockContainer">
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		getStock();
+		//var _task = setInterval(function(){
+		//	getStock();
+		//},1000);
+	</script>
+</body>
+</html>
