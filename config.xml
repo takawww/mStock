@@ -11,7 +11,7 @@
 	<author email="takawong@aisoft.com.hk">
 		Taka Wong
 	</author>
-
+	<access origin="*" />
 	<perference name="orientation" value="landscape"/>
 	<perference name="fullscreen" value="false"/>
 
