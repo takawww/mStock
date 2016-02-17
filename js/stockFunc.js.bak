@@ -34,10 +34,14 @@ function getStock(){
 			showStockGrid(stockPrices);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			console.log('Error');
-			console.log(jqXHR);
-			console.log(textStatus);
-			console.log(errorThrown);
+			//console.log('Error');
+			//console.log(jqXHR);
+			//console.log(textStatus);
+			//console.log(errorThrown);
+			//console.log('Error');
+			alert(jqXHR);
+			alert(textStatus);
+			alert(errorThrown);
 		}
 	});
 }

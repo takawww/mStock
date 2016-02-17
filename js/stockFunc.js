@@ -39,7 +39,7 @@ function getStock(){
 			//console.log(textStatus);
 			//console.log(errorThrown);
 			//console.log('Error');
-			alert(jqXHR);
+			alert(jqXHR.status);
 			alert(textStatus);
 			alert(errorThrown);
 		}
