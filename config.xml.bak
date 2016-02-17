@@ -16,6 +16,5 @@
     <author email="takawong@aisoft.com.hk">
         Taka Wong 
     </author>
-	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
 	<access origin="*"/>
 </widget>
