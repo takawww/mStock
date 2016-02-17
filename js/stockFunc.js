@@ -1,23 +1,3 @@
-function call_ajax(){  
-	 $.ajax({  
-		  url: 'http://flash-workshop.com/dev/php/ajax_sample.php',  
-		  type: 'post',       
-		  data: {  
-			   'param1': 'phonegap',  
-			   'param2': 'ajax'  
-		  },  
-		  headers: {  
-			   Header1: '',  
-			   Header2: ''  
-		  },  
-		  dataType: 'json',  
-		  success: function (data) {  
-			   alert(JSON.stringify(data));  
-		  },error: function(xhr, ajaxOptions, thrownError){  
-			   alert("errorstatus: " + xhr.status + " ajaxoptions: " + ajaxOptions + " throwError: " + thrownError);  
-		  }  
-	 });       
-}  
 
 function getStock(){
 	$.ajax({
@@ -34,14 +14,11 @@ function getStock(){
 			showStockGrid(stockPrices);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			//console.log('Error');
-			//console.log(jqXHR);
-			//console.log(textStatus);
-			//console.log(errorThrown);
-			//console.log('Error');
-			alert(jqXHR.status);
-			alert(textStatus);
-			alert(errorThrown);
+			console.log('Error');
+			console.log(jqXHR);
+			console.log(textStatus);
+			console.log(errorThrown);
+			
 		}
 	});
 }
