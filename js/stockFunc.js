@@ -1,14 +1,14 @@
 function getStock(){
 	$.ajax({
 		type: "GET",
-		url: "http://192.1.1.136/stockREST/Price.svc/GetData",
+		url: "http://addressservice.dyndns.ws/stockREST/Price.asmx/GetData",
 		contentType: "text/plain, charset=utf-8",
 		dataType: "json",
 		crossDomain: true, 
 		success: function (result) {
-			var obj = (JSON.parse(result));
-			stockIndexs = obj.stockIndexs;
-			stockPrices = obj.stockPrices;
+			//var obj = (JSON.parse(result));
+			stockIndexs = result.stockIndexs;
+			stockPrices = result.stockPrices;
 			showIndexGrid(stockIndexs);
 			showStockGrid(stockPrices);
 		},
@@ -29,23 +29,23 @@ function showIndexGrid(dataSet){
 		sHTML = sHTML + "<div class='divIndexObj'>"
 		sHTML = sHTML + "	<div class='divIndexObjTitle'></div>"
 		sHTML = sHTML + "	<div class='divIndexObjName'>" + dataSet[i].name + "</div>"
-		if (dataSet[i].delta > 5)
+		if (parseFloat(dataSet[i].percent) > 5)
 		{
 			sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock5'>" + dataSet[i].price + "</div>"
 		}
-		else if (dataSet[i].delta > 0)
+		else if (parseFloat(dataSet[i].percent) > 0)
 		{
 			sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock4'>" + dataSet[i].price + "</div>"
 		}
-		else if (dataSet[i].delta == 0)
+		else if (parseFloat(dataSet[i].percent) == 0)
 		{
 			sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock3'>" + dataSet[i].price + "</div>"
 		}
-		else if (dataSet[i].delta < -5)
+		else if (parseFloat(dataSet[i].percent) < -5)
 		{
 			sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock1'>" + dataSet[i].price + "</div>"
 		}
-		else if (dataSet[i].delta < 0)
+		else if (parseFloat(dataSet[i].percent) < 0)
 		{
 			sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock2'>" + dataSet[i].price + "</div>"
 		}
@@ -68,45 +68,45 @@ function showStockGrid(dataSet){
 	for (var i=0;i<dataSet.length ;i++ )
 	{
 		sHTML = sHTML + "<div class='divStockObj'>"
-		if (dataSet[i].delta > 5)
+		if (parseFloat(dataSet[i].percent) > 5)
 		{
 			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock5'>&nbsp;</div>"
 		}
-		else if (dataSet[i].delta > 0)
+		else if (parseFloat(dataSet[i].percent) > 0)
 		{
 			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock4'>&nbsp;</div>"
 		}
-		else if (dataSet[i].delta == 0)
+		else if (parseFloat(dataSet[i].percent) == 0)
 		{
 			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock3'>&nbsp;</div>"
 		}
-		else if (dataSet[i].delta < -5)
+		else if (parseFloat(dataSet[i].percent) < -5)
 		{
 			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock1'>&nbsp;</div>"
 		}
-		else if (dataSet[i].delta < 0)
+		else if (parseFloat(dataSet[i].percent) < 0)
 		{
 			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock2'>&nbsp;</div>"
 		}
 		sHTML = sHTML + "	<div class='divStockObjCode'>" + dataSet[i].code + "</div>"
 		sHTML = sHTML + "	<div class='divStockObjName'>" + dataSet[i].name + "</div>"
-		if (dataSet[i].delta > 5)
+		if (parseFloat(dataSet[i].percent) > 5)
 		{
 			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock5'>" + dataSet[i].price + "</div>"
 		}
-		else if (dataSet[i].delta > 0)
+		else if (parseFloat(dataSet[i].percent) > 0)
 		{
 			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock4'>" + dataSet[i].price + "</div>"
 		}
-		else if (dataSet[i].delta == 0)
+		else if (parseFloat(dataSet[i].percent) == 0)
 		{
 			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock3'>" + dataSet[i].price + "</div>"
 		}
-		else if (dataSet[i].delta < -5)
+		else if (parseFloat(dataSet[i].percent) < -5)
 		{
 			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock1'>" + dataSet[i].price + "</div>"
 		}
-		else if (dataSet[i].delta < 0)
+		else if (parseFloat(dataSet[i].percent) < 0)
 		{
 			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock2'>" + dataSet[i].price + "</div>"
 		}
