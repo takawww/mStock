@@ -1,0 +1,18 @@
+<? xml version="1.0" encoding="UTF-8" ?>
+
+<widget xmlns="https://www.w3.org/ns/widgets"
+		xmlns:gap = "http://phonegap.con/ns/1.0"
+		id="hk.com.aisoft.mStock"
+		versionCode="1"
+		version="1.0.0">
+	
+	<name>mStock</name>
+	<description>Stock Index and Price</description>
+	<author email="takawong@aisoft.com.hk">
+		Taka Wong
+	</author>
+
+	<perference name="orientation" value="landscape"/>
+	<perference name="fullscreen" value="false"/>
+
+</widget>
