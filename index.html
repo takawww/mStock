@@ -1,21 +1,37 @@
 <html>
 <head>
 	<title>Silly Simple</title>
-	
+	<meta HTTP-EQUIV='Pragma' CONTENT='no-cache'>
+	<meta HTTP-EQUIV='Cache-Control' CONTENT='no-cache'>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7; IE=EmulateIE9" />
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+		
+
+	<link href="css/style.css"rel="stylesheet" />
+	<script type="text/javascript" src="js/stockFunc.js"></script>
+	<script type="text/javascript" src="js/zepto.min.js"></script>
+	<script>
+		var stockIndexs;
+		var stockPrices;
+
+	</script>
 </head>
 <body>
-	<button id="silly">Do it</button>
-	<button id="clear">Clear</button>
-	<div id="result"></div>
-	<script src="js/zepto.min.js"></script>
-	<script src="js/silly.js"></script>
-	<script>
-		$("#silly").click( function(){
-			SILLY.DoIt($("#result"));
-		});
-		$("#clear").click( function(){
-			$("#result").html("");
-		});
+	<div class="divHeader">
+		<div class="divIndexContainer">
+		</div>
+	</div>
+	<div class="divBody">
+		<div class="divStockContainer">
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		getStock();
+		//var _task = setInterval(function(){
+		//	getStock();
+		//},1000);
 	</script>
 </body>
 </html>
