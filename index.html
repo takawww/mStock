@@ -10,15 +10,21 @@
 
 	<link href="css/style.css"rel="stylesheet" />
 	<script type="text/javascript" src="js/stockFunc.js"></script>
-	<script type="text/javascript" src="js/zepto.min.js"></script>
+	<script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
 	<script>
 		var stockIndexs;
 		var stockPrices;
+		$(document).ready(function() {
+			getStock();
 
+			var _task = setInterval(function(){
+			getStock();
+			},1000);
+		});
 	</script>
 </head>
 <body>
-	mSTOCK
+	<div class="divTop">&nbsp;</div>
 	<div class="divHeader">
 		<div class="divIndexContainer">
 		</div>
@@ -27,12 +33,5 @@
 		<div class="divStockContainer">
 		</div>
 	</div>
-
-	<script type="text/javascript">
-		getStock();
-		//var _task = setInterval(function(){
-		//	getStock();
-		//},1000);
-	</script>
 </body>
 </html>
