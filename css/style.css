@@ -10,18 +10,17 @@ html, body{
 	width:100%;
 	box-sizing: border-box;
 	display:table;
-	background-color:#3650F3;
+	background-color:#eeeeee;
 }
 
 .divIndexObj{
-	border-bottom:solid 1px #ffffff; 
-	border-left:solid 1px #ffffff; 
-	border-right:solid 1px #ffffff; 
-	display: table-cell;
+	float:left;
+	border:solid 1px #0E122C; 
 	box-sizing: border-box;
 }
 
 .divIndexObjName{
+	color: #0E122C;
 	float:left;
 	width:120px;
 	padding:5px;
@@ -34,6 +33,7 @@ html, body{
 }
 
 .divIndexObjDelta{
+	color: #0E122C;
 	float:left;
 	width:180px;
 	padding:5px;
