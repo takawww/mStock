@@ -10,6 +10,7 @@
 
 	<link href="css/style.css"rel="stylesheet" />
 	<script type="text/javascript" src="js/stockFunc.js"></script>
+	<script type="text/javascript" src="js/AppFunc.js"></script>
 	<script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
 	<script>
 		var stockIndexs;
@@ -32,5 +33,9 @@
 		<div class="divStockContainer">
 		</div>
 	</div>
+	<audio id="soundUp" src="/sound/sound_up.mp3" type="audio/mpeg" ></audio>
+	<audio id="soundDown" src="/sound/sound_down.mp3" type="audio/mpeg" ></audio>
+	<button onclick="playAudio('soundUp')">Play Up Sound</button>
+	<button onclick="playAudio('soundDown')">Play Down Sound</button>
 </body>
 </html>

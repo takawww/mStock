@@ -28,7 +28,7 @@ function showIndexGrid(dataSet){
 
 	for (var i=0;i<dataSet.length ;i++ )
 	{
-		if (i == 0)
+		if (i < 2)
 		{
 			sHTML = sHTML + "<div class='divIndexLObj'>"
 			sHTML = sHTML + "	<div class='divIndexLObjTitle'></div>"
