@@ -9,14 +9,25 @@
 		
 
 	<link href="css/style.css"rel="stylesheet" />
-	<script src="phonegap.js"></script>
+	<script type="text/javascript" src="phonegap.js"></script>
+	<script type="text/javascript" src="PushNotification.js"></script>
 	<script type="text/javascript" src="js/stockFunc.js"></script>
 	<script type="text/javascript" src="js/stockFunc.js"></script>
 	<script type="text/javascript" src="js/AppFunc.js"></script>
 	<script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
 	<script>
 		var stockIndexs;
 		var stockPrices;
+
+		var drag;
+		var z_idx;
+		var drg_h;
+		var drg_w;
+		var pos_y;
+		var pos_x;
+
 		$(document).ready(function() {
 			getStock();
 
@@ -32,12 +43,13 @@
 		</div>
 	</div>
 	<div class="divBody">
-		<div class="divStockContainer">
-		</div>
+		<ul class="ulStockContainer">
+		</ul>
 	</div>
 	<audio id="soundUp" src="/android_asset/www/sound/sound_up.wav" type="audio/mpeg" ></audio>
 	<audio id="soundDown" src="/android_asset/www/sound/sound_down.wav" type="audio/mpeg" ></audio>
-	<button onclick="javascript:playAudio('soundUp')">Play Up Sound</button>
-	<button onclick="javascript:playAudio('soundDown')">Play Down Sound</button>
+	
+	<!--<button onclick="javascript:playAudio('soundUp')">Play Up Sound</button>
+	<button onclick="javascript:playAudio('soundDown')">Play Down Sound</button>-->
 </body>
 </html>

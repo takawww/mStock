@@ -1,12 +1,9 @@
 function playAudio(id) {
     var audioElement = document.getElementById(id);
-	alert(audioElement);
-    var url = audioElement.getAttribute('src');
-	alert(url);
-    var my_media = new Media(url,
+	var url = audioElement.getAttribute('src');
+	var my_media = new Media(url,
 		 function () { alert("playAudio():Audio Success"); },
 		 function (err) { alert("playAudio():Audio Error: " + JSON.stringify(err)); }
     );
-	alert(my_media);
-    my_media.play();
+	my_media.play();
 }
