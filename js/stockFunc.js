@@ -28,38 +28,75 @@ function showIndexGrid(dataSet){
 
 	for (var i=0;i<dataSet.length ;i++ )
 	{
-		sHTML = sHTML + "<div class='divIndexObj'>"
-		sHTML = sHTML + "	<div class='divIndexObjTitle'></div>"
-		sHTML = sHTML + "	<div class='divIndexObjName'>" + dataSet[i].name + "</div>"
-		if (parseFloat(dataSet[i].percent) > 5)
+		if (i == 0)
 		{
-			sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock5'>" + dataSet[i].price + "</div>"
+			sHTML = sHTML + "<div class='divIndexLObj'>"
+			sHTML = sHTML + "	<div class='divIndexLObjTitle'></div>"
+			sHTML = sHTML + "	<div class='divIndexLObjName'>" + dataSet[i].name + "</div>"
+			if (parseFloat(dataSet[i].percent) > 5)
+			{
+				sHTML = sHTML + "	<div class='divIndexLObjPrice divFontStock5'>" + dataSet[i].price + "</div>"
+			}
+			else if (parseFloat(dataSet[i].percent) > 0)
+			{
+				sHTML = sHTML + "	<div class='divIndexLObjPrice divFontStock4'>" + dataSet[i].price + "</div>"
+			}
+			else if (parseFloat(dataSet[i].percent) == 0)
+			{
+				sHTML = sHTML + "	<div class='divIndexLObjPrice divFontStock3'>" + dataSet[i].price + "</div>"
+			}
+			else if (parseFloat(dataSet[i].percent) < -5)
+			{
+				sHTML = sHTML + "	<div class='divIndexLObjPrice divFontStock1'>" + dataSet[i].price + "</div>"
+			}
+			else if (parseFloat(dataSet[i].percent) < 0)
+			{
+				sHTML = sHTML + "	<div class='divIndexLObjPrice divFontStock2'>" + dataSet[i].price + "</div>"
+			}
+			if (dataSet[i].percent > 0)
+			{
+				sHTML = sHTML + "	<div class='divIndexLObjDelta'>+" + dataSet[i].delta + " (+" + dataSet[i].percent + "%)</div>"
+			}
+			else
+			{
+				sHTML = sHTML + "	<div class='divIndexLObjDelta'>" + dataSet[i].delta + " (" + dataSet[i].percent + "%)</div>"
+			}
+			sHTML = sHTML + "</div>"
+		}else{
+			sHTML = sHTML + "<div class='divIndexObj'>"
+			sHTML = sHTML + "	<div class='divIndexObjTitle'></div>"
+			sHTML = sHTML + "	<div class='divIndexObjName'>" + dataSet[i].name + "</div>"
+			if (parseFloat(dataSet[i].percent) > 5)
+			{
+				sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock5'>" + dataSet[i].price + "</div>"
+			}
+			else if (parseFloat(dataSet[i].percent) > 0)
+			{
+				sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock4'>" + dataSet[i].price + "</div>"
+			}
+			else if (parseFloat(dataSet[i].percent) == 0)
+			{
+				sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock3'>" + dataSet[i].price + "</div>"
+			}
+			else if (parseFloat(dataSet[i].percent) < -5)
+			{
+				sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock1'>" + dataSet[i].price + "</div>"
+			}
+			else if (parseFloat(dataSet[i].percent) < 0)
+			{
+				sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock2'>" + dataSet[i].price + "</div>"
+			}
+			if (dataSet[i].percent > 0)
+			{
+				sHTML = sHTML + "	<div class='divIndexObjDelta'>+" + dataSet[i].delta + " (+" + dataSet[i].percent + "%)</div>"
+			}
+			else
+			{
+				sHTML = sHTML + "	<div class='divIndexObjDelta'>" + dataSet[i].delta + " (" + dataSet[i].percent + "%)</div>"
+			}
+			sHTML = sHTML + "</div>"
 		}
-		else if (parseFloat(dataSet[i].percent) > 0)
-		{
-			sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock4'>" + dataSet[i].price + "</div>"
-		}
-		else if (parseFloat(dataSet[i].percent) == 0)
-		{
-			sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock3'>" + dataSet[i].price + "</div>"
-		}
-		else if (parseFloat(dataSet[i].percent) < -5)
-		{
-			sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock1'>" + dataSet[i].price + "</div>"
-		}
-		else if (parseFloat(dataSet[i].percent) < 0)
-		{
-			sHTML = sHTML + "	<div class='divIndexObjPrice divFontStock2'>" + dataSet[i].price + "</div>"
-		}
-		if (dataSet[i].percent > 0)
-		{
-			sHTML = sHTML + "	<div class='divIndexObjDelta'>+" + dataSet[i].delta + " (+" + dataSet[i].percent + "%)</div>"
-		}
-		else
-		{
-			sHTML = sHTML + "	<div class='divIndexObjDelta'>" + dataSet[i].delta + " (" + dataSet[i].percent + "%)</div>"
-		}
-		sHTML = sHTML + "</div>"
+		
 	}
 	$(".divIndexContainer").html(sHTML);
 };
