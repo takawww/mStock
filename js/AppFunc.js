@@ -5,7 +5,7 @@ function playAudio(id) {
 	alert(url);
     var my_media = new Media(url,
 		 function () { alert("playAudio():Audio Success"); },
-		 function (err) { alert("playAudio():Audio Error: " + err); }
+		 function (err) { alert("playAudio():Audio Error: " + JSON.stringify(err)); }
     );
 	alert(my_media);
     my_media.play();
