@@ -25,6 +25,7 @@ html, body{
 	border:solid 1px #0E122C; 
 	box-sizing: border-box;
 	height:40px;
+	width: 450px;
 	display:table;
 	background-color:#eeeeee;
 }
@@ -103,7 +104,7 @@ html, body{
 .divStockObj{
 	display:table;
 	width: 160px;
-	height: 140px;
+	height: 120px;
 	border:solid 1px #ffffff; 
 	background-color:#0E122C;
 }
@@ -117,44 +118,52 @@ html, body{
 
 
 .divStockObjCode{
-	float: left;
-	width:100px;
+	width:100%;
 	box-sizing: border-box;
 	padding:5px;
+	line-height:12px;
 	font-size:20px;
 }
 
 .divStockObjName{
-	float: left;
-	width:100px;
+	width:100%;
 	box-sizing: border-box;
 	padding:5px;
+	line-height:12px;
 	font-size:14px;
+}
+
+.divStockObjHighLow{
+	width:100%;
+	box-sizing: border-box;
+	display:table;
 }
 
 .divStockObjHigh{
 	float: right;
-	width:60px;
+	width:50%;
 	box-sizing: border-box;
 	padding:5px;
-	font-size:12px;
-	text-align:right;
+	padding-left:20px;
+	line-height:12px;
+	font-size:16px;
 	background-image:url(../img/ico_up_arrow.png);
 	background-size:12px 12px;
-	background-position: 0px center;
+	background-position: 5px center;
 	background-repeat:no-repeat;
 }
 
 .divStockObjLow{
 	float: right;
-	width:60px;
+	width:50%;
 	box-sizing: border-box;
 	padding:5px;
-	font-size:12px;
-	text-align:right;
+	padding-left:20px;
+	line-height:12px;
+	font-size:16px;
 	background-image:url(../img/ico_down_arrow.png);
 	background-size:12px 12px;
-	background-position: 0px center;
+	background-position: 5px center;
 	background-repeat:no-repeat;
 
 }
@@ -163,12 +172,14 @@ html, body{
 	width:100%;
 	box-sizing: border-box;
 	padding:5px;
+	line-height:16px;
 	font-size:26px;
 }
 
 .divStockObjDelta{
 	width:100%;
 	box-sizing: border-box;
+	line-height:12px;
 	padding:5px;
 }
 
@@ -223,6 +234,6 @@ html, body{
 	margin: 3px; 
 	float: left; 
 	width: 160px; 
-	height: 140px; 
+	height: 120px; 
 }
   

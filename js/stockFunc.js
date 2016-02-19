@@ -205,8 +205,6 @@ function showStockGrid(dataSet){
 			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock2'>&nbsp;</div>"
 		}
 		sHTML = sHTML + "	<div class='divStockObjCode'>" + dataSet[i].code + "</div>"
-		sHTML = sHTML + "	<div class='divStockObjHigh'>" + dataSet[i].high + "</div>"
-		sHTML = sHTML + "	<div class='divStockObjLow'>" + dataSet[i].low + "</div>"
 		sHTML = sHTML + "	<div class='divStockObjName'>" + dataSet[i].name + "</div>"
 		if (parseFloat(dataSet[i].percent) > 5)
 		{
@@ -236,7 +234,13 @@ function showStockGrid(dataSet){
 		{
 			sHTML = sHTML + "	<div class='divStockObjDelta'>" + dataSet[i].delta + " (" + dataSet[i].percent + "%)</div>"
 		}
+		sHTML = sHTML +		"<div class='divStockObjHighLow'>"
+		sHTML = sHTML + "		<div class='divStockObjHigh'>" + dataSet[i].high + "</div>"
+		sHTML = sHTML + "		<div class='divStockObjLow'>" + dataSet[i].low + "</div>"
+		sHTML = sHTML + "	</div>"
+		
 		sHTML = sHTML + "</div>"
+		
 		sHTML = sHTML + "</li>";
 		
 	}
