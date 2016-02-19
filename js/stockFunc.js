@@ -104,9 +104,9 @@ function showIndexGrid(dataSet){
 			sHTML = sHTML + "	<div class='divIndexLObjTitle'></div>"
 			sHTML = sHTML + "	<div class='divIndexLObjName'>" + dataSet[i].name + "</div>"
 			if (i == 0){
-				sHTML = sHTML + "	<div class='divIndexLObjChart' style='background-image:url(http://hkej.dbpower.com.hk/hkej/chart/cache/chart_small_intra_HSI.png?t=" + new Date().getTime() + ")'></div>"
+				sHTML = sHTML + "	<div class='divIndexLObjChart' style='background-image:url(http://webchart.aastocks.com/chart/indices/indexdailychart.aspx?width=190&height=75&symbol=110000)'></div>"
 			}else{
-				sHTML = sHTML + "	<div class='divIndexLObjChart'>&nbsp;</div>"
+				sHTML = sHTML + "	<div class='divIndexLObjChart' style='background-image:url(http://webchart.aastocks.com/chart/indices/indexdailychart.aspx?width=190&height=75&symbol=110010)'></div>"
 			}
 			if (parseFloat(dataSet[i].percent) > 5)
 			{
@@ -178,12 +178,13 @@ function showIndexGrid(dataSet){
 
 function showStockGrid(dataSet){
 	var sHTML = "";
-
+	var sSelClass = "";
 	for (var i=0;i<dataSet.length ;i++ )
 	{
-		//sHTML = sHTML + "<div id='divStockObjSep_i' class='divStockObjSep'>&nbsp;</div>"
-		sHTML = sHTML + "<li class='ui-state-default' id='liStockObj_" + dataSet[i].code + "'>";
-		sHTML = sHTML + "<div class='divStockObj'>"
+		sSelClass = "";
+		if (dataSet[i].code == stockSel) sSelClass = "divStockObjSel";
+		sHTML = sHTML + "<li class='ui-state-default' class='liStockObj' id='liStockObj_" + dataSet[i].code + "'>";
+		sHTML = sHTML + "<div class='divStockObj' class='divStockObj " + sSelClass + "' id='divStockObj_" + dataSet[i].code + "' >"
 		if (parseFloat(dataSet[i].percent) > 5)
 		{
 			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock5'>&nbsp;</div>"
@@ -205,6 +206,10 @@ function showStockGrid(dataSet){
 			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock2'>&nbsp;</div>"
 		}
 		sHTML = sHTML + "	<div class='divStockObjCode'>" + dataSet[i].code + "</div>"
+		if (dataSet[i].meet != "")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet'>" + dataSet[i].meet.substr(0, 2) + "<br/>" + dataSet[i].meet.substr(2) + "</div>"
+		}
 		sHTML = sHTML + "	<div class='divStockObjName'>" + dataSet[i].name + "</div>"
 		if (parseFloat(dataSet[i].percent) > 5)
 		{
@@ -251,7 +256,106 @@ function showStockGrid(dataSet){
 		}
 	});
     $(".ulStockContainer").disableSelection();
+	$(".divStockObj").click(function(){
+		var stockID = $(this).attr("id");
+		stockID = stockID.replace(/divStockObj_/g,"");
+		stockSel = stockID;
+		$(".divStockObjSel").removeClass("divStockObjSel");
+		$("#divStockObj_" + stockID).addClass("divStockObjSel");
+		showStockInfo(stockID);
+	});
 };
+
+function showStockInfo(stockID){
+	var stock;
+	for(var i=0;i<stockPrices.length;i++){
+		if (stockPrices[i].code == stockID)
+		{
+			stock = stockPrices[i];
+		}
+	}
+	var sHTML = "";
+	sHTML = sHTML + "<div class='divStockObj'>"
+	if (parseFloat(stock.percent) > 5)
+	{
+		sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock5'>&nbsp;</div>"
+	}
+	else if (parseFloat(stock.percent) > 0)
+	{
+		sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock4'>&nbsp;</div>"
+	}
+	else if (parseFloat(stock.percent) == 0)
+	{
+		sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock3'>&nbsp;</div>"
+	}
+	else if (parseFloat(stock.percent) < -5)
+	{
+		sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock1'>&nbsp;</div>"
+	}
+	else if (parseFloat(stock.percent) < 0)
+	{
+		sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock2'>&nbsp;</div>"
+	}
+	sHTML = sHTML + "	<div class='divStockObjCode'>" + stock.code + "</div>"
+	if (stock.meet != "")
+	{
+		sHTML = sHTML + "	<div class='divStockObjMeet'>" + stock.meet.substr(0, 2) + "<br/>" + stock.meet.substr(2) + "</div>"
+	}
+	sHTML = sHTML + "	<div class='divStockObjName'>" + stock.name + "</div>"
+	if (parseFloat(stock.percent) > 5)
+	{
+		sHTML = sHTML + "	<div class='divStockObjPrice divFontStock5'>" + stock.price + "</div>"
+	}
+	else if (parseFloat(stock.percent) > 0)
+	{
+		sHTML = sHTML + "	<div class='divStockObjPrice divFontStock4'>" + stock.price + "</div>"
+	}
+	else if (parseFloat(stock.percent) == 0)
+	{
+		sHTML = sHTML + "	<div class='divStockObjPrice divFontStock3'>" + stock.price + "</div>"
+	}
+	else if (parseFloat(stock.percent) < -5)
+	{
+		sHTML = sHTML + "	<div class='divStockObjPrice divFontStock1'>" + stock.price + "</div>"
+	}
+	else if (parseFloat(stock.percent) < 0)
+	{
+		sHTML = sHTML + "	<div class='divStockObjPrice divFontStock2'>" + stock.price + "</div>"
+	}
+	if (stock.percent > 0)
+	{
+		sHTML = sHTML + "	<div class='divStockObjDelta'>+" + stock.delta + " (+" + stock.percent + "%)</div>"
+	}
+	else
+	{
+		sHTML = sHTML + "	<div class='divStockObjDelta'>" + stock.delta + " (" + stock.percent + "%)</div>"
+	}
+	sHTML = sHTML +		"<div class='divStockObjHighLow'>"
+	sHTML = sHTML + "		<div class='divStockObjHigh'>" + stock.high + "</div>"
+	sHTML = sHTML + "		<div class='divStockObjLow'>" + stock.low + "</div>"
+	sHTML = sHTML + "	</div>"	
+	sHTML = sHTML + "</div>"
+
+	//sHTML = sHTML + "<div class='divDetailsCode'>" + stock.code + "</div>"
+	//sHTML = sHTML + "<div class='divDetailsName'>" + stock.name + "</div>"
+	//sHTML = sHTML + "<div class='divDetailsPrice'>" + stock.price + "</div>"
+	//sHTML = sHTML + "<div class='divDetailsDelta'>" + stock.delta + "</div>"
+	//sHTML = sHTML + "<div class='divDetailsHighLow'></div>"
+	//sHTML = sHTML + "<div class='divDetailsNotice'>"
+	//sHTML = sHTML + "</div>"
+	
+	
+	$(".divOverlayDetails").hide('slide', {direction: 'right'}, 1000, function(){
+		$(".divOverlayContent").html(sHTML);
+	});
+	
+	$(".divOverlayDetails").show('slide', {direction: 'right'}, 1000);
+	
+}
+
+function hideStockInfo(){
+	$(".divOverlayDetails").hide('slide', {direction: 'right'}, 1000);
+}
 
 function setStockArraySeq(id, idx){
 	console.log("new position --> " + idx);

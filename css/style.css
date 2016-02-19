@@ -1,6 +1,6 @@
 html, body{
 	font-family: arial, Hei, SimSun, ËÎÌå, ºÚÌå, ºÚÌå, Î¢ÈíÑÅºÚ, ËÎÌå, sans-serif;
-	background-color:#0E122C;
+	background-color:#090B13;
 	font-size:16px;
 	color:#ffffff;
 	font-weight:bold;
@@ -11,21 +11,50 @@ html, body{
 	2016/2/18user-select: none;          /* Likely future */  
 }
 
-
-
 .divHeader{
 	width:100%;
 	box-sizing: border-box;
 	display:table;
-	
 }
+
+.divOverlayDetails{
+	position: absolute;
+	top:10%;
+	right:0px;
+	width:200px;
+	height:80%;
+	background-color:#000000;
+	border-left: solid 2px #0E122C;
+	border-top: solid 2px #0E122C;
+	border-bottom: solid 2px #0E122C;
+	display:none;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.divOverlayClose{
+	float:left;
+	width:30px;
+	height:100%;
+	background-image:url(../img/ico_close_right.png);
+	background-position:center center;
+	background-size: 20px 20px;
+	background-repeat:no-repeat;
+}
+
+.divOverlayContent{
+	float:right;
+	width:170px;
+	height:100%;
+}
+
 
 .divIndexObj{
 	float:left;
 	border:solid 1px #0E122C; 
 	box-sizing: border-box;
 	height:40px;
-	width: 450px;
+	width: 50%;
 	display:table;
 	background-color:#eeeeee;
 }
@@ -50,14 +79,12 @@ html, body{
 	padding:5px;
 }
 
-
-
 .divIndexLObj{
 	float:left;
 	border:solid 1px #0E122C; 
 	box-sizing: border-box;
 	height:80px;
-	width:450px;
+	width:50%;
 	background-color:#eeeeee;
 }
 
@@ -74,7 +101,7 @@ html, body{
 
 .divIndexLObjChart{
 	float:right;
-	width:160px;
+	width:180px;
 	padding:5px;
 	height:65px;
 	background-size:contain;
@@ -86,7 +113,8 @@ html, body{
 .divIndexLObjPrice{
 	float:left;
 	box-sizing: border-box;
-	width:100px;
+	width:150px;
+	line-height:30px;
 	padding:5px;
 	font-size:30px;
 }
@@ -106,7 +134,11 @@ html, body{
 	width: 160px;
 	height: 120px;
 	border:solid 1px #ffffff; 
-	background-color:#0E122C;
+	background-color:#090B13;
+}
+
+.divStockObjSel{
+	background-color:#081A61;
 }
 
 .divStockObjTitle{
@@ -115,10 +147,9 @@ html, body{
 	height:5px;
 }
 
-
-
 .divStockObjCode{
-	width:100%;
+	float:left;
+	width:70%;
 	box-sizing: border-box;
 	padding:5px;
 	line-height:12px;
@@ -126,11 +157,27 @@ html, body{
 }
 
 .divStockObjName{
-	width:100%;
+	float:left;
+	width:70%;
 	box-sizing: border-box;
 	padding:5px;
 	line-height:12px;
 	font-size:14px;
+}
+
+.divStockObjMeet{
+	float: right;
+    width: 30%;
+    height: 40px;
+    color: #090B13;
+	text-align:center;
+    box-sizing: border-box;
+    padding: 5px;
+    font-size: 14px;
+    background-image: url(../img/ico_cal.png);
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 .divStockObjHighLow{

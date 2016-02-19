@@ -18,8 +18,13 @@
 	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
 	<script>
+		var testObj = { a: 1 };
+		
+		window.localStorage.setItem("key", testObj);
+
 		var stockIndexs;
 		var stockPrices;
+		var stockSel = "";
 
 		var drag;
 		var z_idx;
@@ -32,7 +37,7 @@
 			getStock();
 
 			var _task = setInterval(function(){
-				getStock();
+				//getStock();
 			},10000);
 		});
 	</script>
@@ -46,10 +51,14 @@
 		<ul class="ulStockContainer">
 		</ul>
 	</div>
+	<div class="divOverlayDetails">
+		<div class="divOverlayClose" onclick="javascript:hideStockInfo()"></div>
+		<div class="divOverlayContent"></div>
+	</div>
 	<audio id="soundUp" src="/android_asset/www/sound/sound_up.wav" type="audio/mpeg" ></audio>
 	<audio id="soundDown" src="/android_asset/www/sound/sound_down.wav" type="audio/mpeg" ></audio>
 	
-	<!--<button onclick="javascript:playAudio('soundUp')">Play Up Sound</button>
-	<button onclick="javascript:playAudio('soundDown')">Play Down Sound</button>-->
+	<!--<button onclick="javascript:alert(window.localStorage.getItem('key'))">Play Up Sound</button>-->
+	<!--<button onclick="javascript:playAudio('soundDown')">Play Down Sound</button>-->
 </body>
 </html>
