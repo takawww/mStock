@@ -10,7 +10,7 @@
 
 	<link href="css/style.css"rel="stylesheet" />
 	<script type="text/javascript" src="phonegap.js"></script>
-	<script type="text/javascript" src="PushNotification.js"></script>
+	<script type="text/javascript" charset="utf-8" src="PushNotification.js"></script>
 	<script type="text/javascript" src="js/stockFunc.js"></script>
 	<script type="text/javascript" src="js/stockFunc.js"></script>
 	<script type="text/javascript" src="js/AppFunc.js"></script>
@@ -20,14 +20,18 @@
 	<script>
 		var testObj = { a: 1 };
 		
-		var stockIndexs;
-		var stockPrices;
+		var userProfile;
+		var stockIndexs = [];
+		var stockPrices = [];
 		var stockSel = "";
 
-		if (localStorage.getItem("stockPrices") != null) {
-			stockPrices = eval(localStorage.getItem("stockPrices"));
-		}
 
+
+		if (localStorage.getItem("userProfile") != null) {
+			userProfile = eval(localStorage.getItem("userProfile"));
+		}
+		
+		
 		var drag;
 		var z_idx;
 		var drg_h;
@@ -36,11 +40,32 @@
 		var pos_x;
 
 		$(document).ready(function() {
-			getStock();
+			var screenWidth = $(".divBody").css("width");
+			screenWidth = (screenWidth + "").replace(/px/g,"");
+			$(".divStockGrid").css("width", (parseInt(screenWidth) - 100) + "px");
 
-			var _task = setInterval(function(){
-				//getStock();
-			},10000);
+			//if (userProfile == null)
+			//{
+			//	showUserLogin();
+			//}else{
+				initStockTimer()
+			//}
+
+			/*try 
+			{ 
+				pushNotification = window.plugins.pushNotification;
+				if (device.platform == 'android' || device.platform == 'Android') {
+					pushNotification.register(successHandler, errorHandler, {"senderID":"352100686021","ecb":"onNotificationGCM"});
+				} else {
+					pushNotification.register(tokenHandler, errorHandler, {"badge":"true","sound":"true","alert":"true","ecb":"onNotificationAPN"});
+				}
+			}
+			catch(err) 
+			{ 
+				txt="There was an error on this page.\n\n"; 
+				txt+="Error description: " + err.message + "\n\n"; 
+				alert(txt); 
+			} */
 		});
 	</script>
 </head>
@@ -50,13 +75,21 @@
 		</div>
 	</div>
 	<div class="divBody">
-		<ul class="ulStockContainer">
-		</ul>
+		<div class="divSideMenu">
+			<div class="divSlideMenuItem"></div>
+			<div class="divSlideMenuItem"></div>
+			<div class="divSlideMenuItem"></div>
+		</div>
+		<div class="divStockGrid">
+			<ul class="ulStockContainer"></ul>
+		</div>
 	</div>
 	<div class="divOverlayDetails">
 		<div class="divOverlayClose" onclick="javascript:hideStockInfo()"></div>
 		<div class="divOverlayContent"></div>
 	</div>
+	<div id="divLoading" class="divLoadBg" style="display:none"></div>
+	<div id="divAlert" class="divLoadBg" style="display:none"><div id="divAlertMsg"></div></div>
 	<audio id="soundUp" src="/android_asset/www/sound/sound_up.wav" type="audio/mpeg" ></audio>
 	<audio id="soundDown" src="/android_asset/www/sound/sound_down.wav" type="audio/mpeg" ></audio>
 	
