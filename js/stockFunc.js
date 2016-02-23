@@ -185,7 +185,7 @@ function setStockPrices(dataSet){
 			{
 				stockDayPrice.abnormal = "UPUP"
 			}
-			else if ((parseFloat(stockDayPrice.price) - parseFloat(stockDayPrice.price10m))/ parseFloat(stockDayPrice.price10m) * 100 >= 1 )
+			else if ((parseFloat(stockDayPrice.price) - parseFloat(stockDayPrice.price10m))/ parseFloat(stockDayPrice.price10m) * 100 >= 0.5 )
 			{
 				stockDayPrice.abnormal = "UP"
 			}
@@ -193,7 +193,7 @@ function setStockPrices(dataSet){
 			{
 				stockDayPrice.abnormal = "DOWNDOWN"
 			}
-			else if ((parseFloat(stockDayPrice.price) - parseFloat(stockDayPrice.price10m))/ parseFloat(stockDayPrice.price10m) * 100 <= -1 )
+			else if ((parseFloat(stockDayPrice.price) - parseFloat(stockDayPrice.price10m))/ parseFloat(stockDayPrice.price10m) * 100 <= -0.5 )
 			{
 				stockDayPrice.abnormal = "DOWN"
 			}
@@ -296,82 +296,68 @@ function showIndexGrid(dataSet){
 function showStockGrid(dataSet){
 	var sHTML = "";
 	var sSelClass = "";
+	var sStatusClass = "";
 	for (var i=0;i<dataSet.length ;i++ )
 	{
 		sSelClass = "";
+		sStatusClass = "";
 		if (dataSet[i].code == stockSel) sSelClass = "divStockObjSel";
 		sHTML = sHTML + "<li class='ui-state-default' class='liStockObj' id='liStockObj_" + dataSet[i].code + "'>";
 
-		if (dataSet[i].abnormal == "UPUP")
-		{
-			sHTML = sHTML + "<div class='divStockObj divUpUp " + sSelClass + "' id='divStockObj_" + dataSet[i].code + "' >"
-		}
-		else if (dataSet[i].abnormal == "UP")
-		{
-			sHTML = sHTML + "<div class='divStockObj divUp " + sSelClass + "' id='divStockObj_" + dataSet[i].code + "' >"
-		}
-		else if (dataSet[i].abnormal == "DOWNDOWN")
-		{
-			sHTML = sHTML + "<div class='divStockObj divDownDown " + sSelClass + "' id='divStockObj_" + dataSet[i].code + "' >"
-		}
-		else if (dataSet[i].abnormal == "DOWN")
-		{
-			sHTML = sHTML + "<div class='divStockObj divDown " + sSelClass + "' id='divStockObj_" + dataSet[i].code + "' >"
-		}
-		else
-		{
-			sHTML = sHTML + "<div class='divStockObj " + sSelClass + "' id='divStockObj_" + dataSet[i].code + "' >"
-		}
-
-		if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 5)
-		{
-			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock5'>&nbsp;</div>"
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 0)
-		{
-			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock4'>&nbsp;</div>"
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) == 0)
-		{
-			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock3'>&nbsp;</div>"
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) < -5)
-		{
-			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock1'>&nbsp;</div>"
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) < 0)
-		{
-			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock2'>&nbsp;</div>"
-		}
-		sHTML = sHTML + "	<div class='divStockObjCode'>" + dataSet[i].code + "</div>"
-		if (dataSet[i].meet != "")
-		{
-			sHTML = sHTML + "	<div class='divStockObjMeet divMeet'>" + dataSet[i].meet.substr(0, 2) + "</div>"
-		}else{
-			sHTML = sHTML + "	<div class='divStockObjMeet'>&nbsp;</div>"
-		}
 		if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "UPUP")
 		{
-			sHTML = sHTML + "	<div class='divStockObjMeet divStarUpUp'>&nbsp;</div>"
+			sStatusClass = "divUpUp";
 		}
 		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "UP")
 		{
-			sHTML = sHTML + "	<div class='divStockObjMeet divStarUp'>&nbsp;</div>"
+			sStatusClass = "divUp";
 		}
 		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "DOWNDOWN")
 		{
-			sHTML = sHTML + "	<div class='divStockObjMeet divStarDownDown'>&nbsp;</div>"
+			sStatusClass = "divDownDown";
 		}
 		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "DOWN")
 		{
-			sHTML = sHTML + "	<div class='divStockObjMeet divStarDown'>&nbsp;</div>"
+			sStatusClass = "divDown";
 		}
 		else
 		{
-			sHTML = sHTML + "	<div class='divStockObjMeet'>&nbsp;</div>"
+			sStatusClass = "";
 		}
 
+		sHTML = sHTML + "<div class='divStockObj " + sStatusClass + " " + sSelClass + "' id='divStockObj_" + dataSet[i].code + "' >";
+		if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 5)
+		{
+			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock5'>&nbsp;</div>";
+		}
+		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 0)
+		{
+			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock4'>&nbsp;</div>";
+		}
+		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) == 0)
+		{
+			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock3'>&nbsp;</div>";
+		}
+		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) < -5)
+		{
+			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock1'>&nbsp;</div>";
+		}
+		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) < 0)
+		{
+			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock2'>&nbsp;</div>";
+		}
+		sHTML = sHTML + "	<div class='divStockObjCodeRow'>";
+		sHTML = sHTML + "		<div class='divStockObjCode'>" + dataSet[i].code + "</div>";
+		if (dataSet[i].meet != "")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet divMeet'>" + dataSet[i].meet.substr(0, 2) + "</div>";
+		}else{
+			sHTML = sHTML + "	<div class='divStockObjMeet'>&nbsp;</div>"
+		}
+		
+		sHTML = sHTML + "	</div>";
 		sHTML = sHTML + "	<div class='divStockObjName'>" + dataSet[i].name + "</div>"
+		sHTML = sHTML + "	<div class='divStockObjPriceRow'>";
 		if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 5)
 		{
 			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock5'>" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].price + "</div>"
@@ -392,6 +378,28 @@ function showStockGrid(dataSet){
 		{
 			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock2'>" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].price + "</div>"
 		}
+
+		if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "UPUP")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet divStarUpUp'>&nbsp;</div>"
+		}
+		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "UP")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet divStarUp'>&nbsp;</div>"
+		}
+		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "DOWNDOWN")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet divStarDownDown'>&nbsp;</div>"
+		}
+		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "DOWN")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet divStarDown'>&nbsp;</div>"
+		}
+		else
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet'>&nbsp;</div>"
+		}
+		sHTML = sHTML + "	</div>";
 		if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 0)
 		{
 			sHTML = sHTML + "	<div class='divStockObjDelta'>+" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].delta + " (+" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent + "%)</div>"

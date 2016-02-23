@@ -36,7 +36,7 @@ html, body{
 }
 
 .divOverlayDetails{
-	position: absolute;
+	position: fixed;
 	top:0px;
 	right:0px;
 	width:200px;
@@ -219,8 +219,14 @@ html, body{
 	height:5px;
 }
 
-.divStockObjCode{
+.divStockObjCodeRow{
 	background-color: rgba(9,11,19,0.6);
+	width:100%;
+	box-sizing: border-box;
+	display:table;
+}
+
+.divStockObjCode{
 	float:left;
 	width:60%;
 	box-sizing: border-box;
@@ -231,6 +237,18 @@ html, body{
 	line-height:16px;
 	font-size:16px;
 	color:cccccc;
+}
+
+.divStockObjMeet{
+	float: right;
+    width: 20%;
+    height: 100%;
+    color: #090B13;
+	text-align:center;
+    box-sizing: border-box;
+    padding: 5px;
+    font-size: 12px;
+    
 }
 
 .divStockObjName{
@@ -245,18 +263,47 @@ html, body{
 	font-size:14px;
 }
 
-.divStockObjMeet{
+.divStockObjPriceRow{
 	background-color: rgba(9,11,19,0.6);
-	float: right;
-    width: 20%;
-    height: 20px;
-    color: #090B13;
-	text-align:center;
-    box-sizing: border-box;
-    padding: 5px;
-    font-size: 12px;
-    
+	width:100%;
+	box-sizing: border-box;
+	display:table;
 }
+
+.divStockObjPrice{
+	float: left;
+	width:80%;
+	box-sizing: border-box;
+	padding-top:2px;
+	padding-bottom:2px;
+	padding-left:5px;
+	padding-right:5px;
+	line-height:26px;
+	font-size:26px;
+	text-shadow: 0px 0px 15px #000000;
+}
+
+.divStockObjDelta{
+	background-color: rgba(9,11,19,0.6);
+	width:100%;
+	box-sizing: border-box;
+	padding-top:2px;
+	padding-bottom:2px;
+	padding-left:5px;
+	padding-right:5px;
+	line-height:16px;
+	font-size:16px;
+	padding:5px;
+}
+
+.divStockObjHighLow{
+	background-color: rgba(9,11,19,0.6);
+	width:100%;
+	box-sizing: border-box;
+	display:table;
+}
+
+
 
 .divMeet{
 	background-image: url(../img/ico_cal.png);
@@ -293,12 +340,7 @@ html, body{
     background-repeat: no-repeat;
 }
 
-.divStockObjHighLow{
-	background-color: rgba(9,11,19,0.6);
-	width:100%;
-	box-sizing: border-box;
-	display:table;
-}
+
 
 .divStockObjHigh{
 	float: right;
@@ -329,31 +371,6 @@ html, body{
 
 }
 
-.divStockObjPrice{
-	background-color: rgba(9,11,19,0.6);
-	width:100%;
-	box-sizing: border-box;
-	padding-top:2px;
-	padding-bottom:2px;
-	padding-left:5px;
-	padding-right:5px;
-	line-height:26px;
-	font-size:26px;
-	text-shadow: 0px 0px 15px #000000;
-}
-
-.divStockObjDelta{
-	background-color: rgba(9,11,19,0.6);
-	width:100%;
-	box-sizing: border-box;
-	padding-top:2px;
-	padding-bottom:2px;
-	padding-left:5px;
-	padding-right:5px;
-	line-height:16px;
-	font-size:16px;
-	padding:5px;
-}
 
 .divFontStock5{
 	color:#C8D409;
@@ -432,13 +449,13 @@ html, body{
 	border:solid 1px #cccccc;
 }
 
-.divHeader{
+.divPopHeader{
 	color:#000000;
 	background-color:#ffffff;
 	padding:5px;
 	text-align:center;
 }
-.divContentRow{
+.divPopContentRow{
 	border:solid 1px #cccccc;
 	background-color:#ffffff;
 	padding:5px;
