@@ -23,13 +23,15 @@
 		var userProfile;
 		var stockIndexs = [];
 		var stockPrices = [];
+		var stockMonitor = [];
 		var stockSel = "";
 
+		var pressStock;
+		var pressTimer;
 
 
-		if (localStorage.getItem("userProfile") != null) {
-			userProfile = eval(localStorage.getItem("userProfile"));
-		}
+		if (localStorage.getItem("stockPrices") != null)  stockPrices = eval(localStorage.getItem("stockPrices"));
+		if (localStorage.getItem("stockMonitor") != null)  stockMonitor = eval(localStorage.getItem("stockMonitor"));
 		
 		
 		var drag;
@@ -39,10 +41,15 @@
 		var pos_y;
 		var pos_x;
 
+		var screenWidth = ""; 
+			
 		$(document).ready(function() {
-			var screenWidth = $(".divBody").css("width");
-			screenWidth = (screenWidth + "").replace(/px/g,"");
-			$(".divStockGrid").css("width", (parseInt(screenWidth) - 100) + "px");
+			//screenWidth = $(".divBody").innerWidth();
+			//screenWidth = (screenWidth + "").replace(/px/g,"");
+			//screenWidth = (parseInt(screenWidth) - 0)/2;
+
+			//$(".divCatView").css("width", screenWidth + "px");
+			//$(".divUserView").css("width", screenWidth + "px");
 
 			//if (userProfile == null)
 			//{
@@ -66,6 +73,16 @@
 				txt+="Error description: " + err.message + "\n\n"; 
 				alert(txt); 
 			} */
+
+			$(window).on('resize', function(){
+				//screenWidth = $(".divBody").css("width");
+				//screenWidth = (screenWidth + "").replace(/px/g,"");
+				//screenWidth = (parseInt(screenWidth) - 20)/2;
+
+				//$(".divCatView").css("width", screenWidth + "px");
+				//2016/2/242016/2/24$(".divUserView").css("width", screenWidth + "px");
+			});
+
 		});
 	</script>
 </head>
@@ -75,13 +92,27 @@
 		</div>
 	</div>
 	<div class="divBody">
-		<div class="divSideMenu">
-			<div class="divSlideMenuItem"></div>
-			<div class="divSlideMenuItem"></div>
-			<div class="divSlideMenuItem"></div>
+		<div class="divCatView">
+			<div class="divViewMenu">
+				<div class="divViewMenuItem">金屬/採礦</div>
+				<div class="divViewMenuItem">石油化工</div>
+				<div class="divViewMenuItem">電子</div>
+				<div class="divViewMenuItem">物流運輸</div>
+				<div class="divViewMenuItem">零售/貿易</div>
+				<div class="divViewMenuItem">其他</div>
+				<div class="divViewMenuItem">其他</div>
+			</div>
+			<div class="divStockGrid">
+				<ul id="divCatViewStockGrid" class="ulStockContainer"></ul>
+			</div>
 		</div>
-		<div class="divStockGrid">
-			<ul class="ulStockContainer"></ul>
+		<div class="divUserView">
+			<div class="divViewMenu">
+				<div class="divViewMenuItem">監察表</div>
+			</div>
+			<div class="divStockGrid">
+				<ul id="divUserViewStockGrid" class="ulStockContainer"></ul>
+			</div>
 		</div>
 	</div>
 	<div class="divOverlayDetails">

@@ -7,11 +7,11 @@ function getStock(){
 		crossDomain: true, 
 		success: function (result) {
 			//var obj = (JSON.parse(result));
-			//if (localStorage.getItem("stockPrices") == null) localStorage.setItem("stockPrices", JSON.stringify(result.stockPrices));
 			setStockIndexs(result.stockIndexs);
 			setStockPrices(result.stockPrices);
 			showIndexGrid(stockIndexs);
 			showStockGrid(stockPrices);
+			showMonitorGrid(stockMonitor);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			console.log('Error');
@@ -179,6 +179,10 @@ function setStockPrices(dataSet){
 			}
 		}
 		if(!isFound){
+			if (dataSet[i].code == "000005")
+		{
+			var a = "a";
+		}
 			var stockPrice = {"code" : dataSet[i].code, "name" : dataSet[i].name, "createDate" : dataSet[i].createDate, "prevClose" : dataSet[i].prevClose, "open" : dataSet[i].open, "high" : dataSet[i].high, "low" : dataSet[i].low, "meet" : dataSet[i].meet, "dayPrices" : [], "lotSize" : dataSet[i].lotSize, "abnormal" : dataSet[i].abnormal, "shkType" : dataSet[i].shkType, "shkSec" : dataSet[i].shkSec, "shkInd" : dataSet[i].shkInd, "shkCat" : dataSet[i].shkCat, "shkNat" : dataSet[i].shkNat};
 			var stockDayPrice = {"price" : dataSet[i].price, "price10m" : dataSet[i].price10m, "price5m" : dataSet[i].price5m, "delta" : dataSet[i].delta, "percent" : dataSet[i].percent, "createTime" : dataSet[i].createTime, "abnormal" : dataSet[i].abnormal}
 			if ((parseFloat(stockDayPrice.price) - parseFloat(stockDayPrice.price10m))/ parseFloat(stockDayPrice.price10m) * 100 >= 2 )
@@ -205,8 +209,7 @@ function setStockPrices(dataSet){
 			stockPrice.dayPrices.push(stockDayPrice);
 			stockPrices.push(stockPrice);
 		}
-		
-		//localStorage.setItem("stockPrices", JSON.stringify(stockPrices))
+		localStorage.setItem("stockPrices", JSON.stringify(stockPrices));
 	}
 }
 
@@ -299,132 +302,48 @@ function showStockGrid(dataSet){
 	var sStatusClass = "";
 	for (var i=0;i<dataSet.length ;i++ )
 	{
-		sSelClass = "";
-		sStatusClass = "";
-		if (dataSet[i].code == stockSel) sSelClass = "divStockObjSel";
-		sHTML = sHTML + "<li class='ui-state-default' class='liStockObj' id='liStockObj_" + dataSet[i].code + "'>";
-
-		if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "UPUP")
+		if (!isStockMonitor(dataSet[i].code))
 		{
-			sStatusClass = "divUpUp";
-		}
-		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "UP")
-		{
-			sStatusClass = "divUp";
-		}
-		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "DOWNDOWN")
-		{
-			sStatusClass = "divDownDown";
-		}
-		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "DOWN")
-		{
-			sStatusClass = "divDown";
-		}
-		else
-		{
+			sSelClass = "";
 			sStatusClass = "";
+			sHTML = sHTML + genStockObjHTML(dataSet[i].code);
 		}
-
-		sHTML = sHTML + "<div class='divStockObj " + sStatusClass + " " + sSelClass + "' id='divStockObj_" + dataSet[i].code + "' >";
-		if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 5)
-		{
-			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock5'>&nbsp;</div>";
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 0)
-		{
-			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock4'>&nbsp;</div>";
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) == 0)
-		{
-			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock3'>&nbsp;</div>";
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) < -5)
-		{
-			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock1'>&nbsp;</div>";
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) < 0)
-		{
-			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock2'>&nbsp;</div>";
-		}
-		sHTML = sHTML + "	<div class='divStockObjCodeRow'>";
-		sHTML = sHTML + "		<div class='divStockObjCode'>" + dataSet[i].code + "</div>";
-		if (dataSet[i].meet != "")
-		{
-			sHTML = sHTML + "	<div class='divStockObjMeet divMeet'>" + dataSet[i].meet.substr(0, 2) + "</div>";
-		}else{
-			sHTML = sHTML + "	<div class='divStockObjMeet'>&nbsp;</div>"
-		}
-		
-		sHTML = sHTML + "	</div>";
-		sHTML = sHTML + "	<div class='divStockObjName'>" + dataSet[i].name + "</div>"
-		sHTML = sHTML + "	<div class='divStockObjPriceRow'>";
-		if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 5)
-		{
-			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock5'>" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].price + "</div>"
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 0)
-		{
-			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock4'>" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].price + "</div>"
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) == 0)
-		{
-			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock3'>" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].price + "</div>"
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) < -5)
-		{
-			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock1'>" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].price + "</div>"
-		}
-		else if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) < 0)
-		{
-			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock2'>" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].price + "</div>"
-		}
-
-		if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "UPUP")
-		{
-			sHTML = sHTML + "	<div class='divStockObjMeet divStarUpUp'>&nbsp;</div>"
-		}
-		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "UP")
-		{
-			sHTML = sHTML + "	<div class='divStockObjMeet divStarUp'>&nbsp;</div>"
-		}
-		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "DOWNDOWN")
-		{
-			sHTML = sHTML + "	<div class='divStockObjMeet divStarDownDown'>&nbsp;</div>"
-		}
-		else if (dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].abnormal == "DOWN")
-		{
-			sHTML = sHTML + "	<div class='divStockObjMeet divStarDown'>&nbsp;</div>"
-		}
-		else
-		{
-			sHTML = sHTML + "	<div class='divStockObjMeet'>&nbsp;</div>"
-		}
-		sHTML = sHTML + "	</div>";
-		if (parseFloat(dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent) > 0)
-		{
-			sHTML = sHTML + "	<div class='divStockObjDelta'>+" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].delta + " (+" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent + "%)</div>"
-		}
-		else
-		{
-			sHTML = sHTML + "	<div class='divStockObjDelta'>" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].delta + " (" + dataSet[i].dayPrices[dataSet[i].dayPrices.length-1].percent + "%)</div>"
-		}
-		sHTML = sHTML +		"<div class='divStockObjHighLow'>"
-		sHTML = sHTML + "		<div class='divStockObjHigh'>" + dataSet[i].high + "</div>"
-		sHTML = sHTML + "		<div class='divStockObjLow'>" + dataSet[i].low + "</div>"
-		sHTML = sHTML + "	</div>"
-		
-		sHTML = sHTML + "</div>"
-		
-		sHTML = sHTML + "</li>";
-		
 	}
-	$(".ulStockContainer").html(sHTML);
-	$(".ulStockContainer").sortable({
+	$("#divCatViewStockGrid").html(sHTML);
+	$("#divCatViewStockGrid").sortable({
+		items: 'li',
+		revert: true,
+		opacity: .5,    
+		out: function(event, ui){console.log("out");},
+		over: function(event, ui){console.log("over");},
 		beforeStop: function(event, ui) {
-			setStockArraySeq(ui.item[0].id, ui.placeholder.index())
+			setStockArraySeq(ui.item[0].id, ui.placeholder.index());
 		}
 	});
-    $(".ulStockContainer").disableSelection();
+    $("#divCatViewStockGrid").disableSelection();
+};
+
+
+function showMonitorGrid(dataSet){
+	var sHTML = "";
+	var sSelClass = "";
+	var sStatusClass = "";
+	for (var i=0;i<dataSet.length ;i++ )
+	{
+		sHTML = sHTML + genStockObjHTML(dataSet[i]);
+	}
+	$("#divUserViewStockGrid").html(sHTML);
+	$("#divUserViewStockGrid").sortable({
+		items: 'li',
+		revert: true,
+		opacity: .5,    
+		out: function(event, ui){console.log("out");},
+		over: function(event, ui){console.log("over");},
+		beforeStop: function(event, ui) {
+			setMonitorArraySeq(ui.item[0].id, ui.placeholder.index());
+		}
+	});
+	$("#divUserViewStockGrid").disableSelection();
 	$(".divStockObj").click(function(){
 		var stockID = $(this).attr("id");
 		stockID = stockID.replace(/divStockObj_/g,"");
@@ -433,7 +352,168 @@ function showStockGrid(dataSet){
 		$("#divStockObj_" + stockID).addClass("divStockObjSel");
 		showStockInfo(stockID);
 	});
+	/*$(".divStockObj").mouseup(function(){
+		clearTimeout(pressTimer)
+		return false;
+	}).mousedown(function(){
+		pressStock = $(this);
+		pressTimer = window.setTimeout(function() {
+			var stockID = pressStock.attr("id");
+			stockID = stockID.replace(/divStockObj_/g,"");
+			stockSel = stockID;
+			$(".divStockObjSel").removeClass("divStockObjSel");
+			$("#divStockObj_" + stockID).addClass("divStockObjSel");
+			showStockInfo(stockID);
+		},5000)
+	  return false; 
+	});*/
 };
+
+function isStockMonitor(stockID){
+	for (var i=0;i<stockMonitor.length ;i++ )
+	{
+		if (parseInt(stockMonitor[i]) == parseInt(stockID))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+function genStockObjHTML(stockID){
+	var stock;
+	var sSelClass = "";
+	var sStatusClass = "";
+	for (var i=0;i<stockPrices.length ;i++ )
+	{
+		if (parseInt(stockPrices[i].code) == parseInt(stockID))
+		{
+			stock = stockPrices[i];
+			break;
+		}
+	}
+	var sHTML = "";
+	if (stock != null)
+	{
+		if (stock.code == stockSel) sSelClass = "divStockObjSel";
+		sHTML = sHTML + "<li class='ui-state-default' class='liStockObj' id='liStockObj_" + stock.code + "'>";
+
+		if (stock.dayPrices[stock.dayPrices.length-1].abnormal == "UPUP")
+		{
+			sStatusClass = "divUpUp";
+		}
+		else if (stock.dayPrices[stock.dayPrices.length-1].abnormal == "UP")
+		{
+			sStatusClass = "divUp";
+		}
+		else if (stock.dayPrices[stock.dayPrices.length-1].abnormal == "DOWNDOWN")
+		{
+			sStatusClass = "divDownDown";
+		}
+		else if (stock.dayPrices[stock.dayPrices.length-1].abnormal == "DOWN")
+		{
+			sStatusClass = "divDown";
+		}
+		else
+		{
+			sStatusClass = "";
+		}
+
+		sHTML = sHTML + "<div class='divStockObj " + sSelClass + "' id='divStockObj_" + stock.code + "' >";
+		if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) > 5)
+		{
+			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock5'>&nbsp;</div>";
+		}
+		else if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) > 0)
+		{
+			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock4'>&nbsp;</div>";
+		}
+		else if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) == 0)
+		{
+			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock3'>&nbsp;</div>";
+		}
+		else if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) < -5)
+		{
+			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock1'>&nbsp;</div>";
+		}
+		else if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) < 0)
+		{
+			sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock2'>&nbsp;</div>";
+		}
+		sHTML = sHTML + "	<div class='divStockObjCodeRow'>";
+		sHTML = sHTML + "		<div class='divStockObjCode'>" + stock.code + "</div>";
+		if (stock.meet != "")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet divMeet'>" + stock.meet.substr(0, 2) + "</div>";
+		}else{
+			sHTML = sHTML + "	<div class='divStockObjMeet'>&nbsp;</div>"
+		}
+		
+		sHTML = sHTML + "	</div>";
+		sHTML = sHTML + "	<div class='divStockObjName'>" + stock.name + "</div>"
+		sHTML = sHTML + "	<div class='divStockObjPriceRow'>";
+		if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) > 5)
+		{
+			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock5'>" + stock.dayPrices[stock.dayPrices.length-1].price + "</div>"
+		}
+		else if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) > 0)
+		{
+			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock4'>" + stock.dayPrices[stock.dayPrices.length-1].price + "</div>"
+		}
+		else if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) == 0)
+		{
+			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock3'>" + stock.dayPrices[stock.dayPrices.length-1].price + "</div>"
+		}
+		else if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) < -5)
+		{
+			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock1'>" + stock.dayPrices[stock.dayPrices.length-1].price + "</div>"
+		}
+		else if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) < 0)
+		{
+			sHTML = sHTML + "	<div class='divStockObjPrice divFontStock2'>" + stock.dayPrices[stock.dayPrices.length-1].price + "</div>"
+		}
+
+		if (stock.dayPrices[stock.dayPrices.length-1].abnormal == "UPUP")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet divStarUpUp'>&nbsp;</div>"
+		}
+		else if (stock.dayPrices[stock.dayPrices.length-1].abnormal == "UP")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet divStarUp'>&nbsp;</div>"
+		}
+		else if (stock.dayPrices[stock.dayPrices.length-1].abnormal == "DOWNDOWN")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet divStarDownDown'>&nbsp;</div>"
+		}
+		else if (stock.dayPrices[stock.dayPrices.length-1].abnormal == "DOWN")
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet divStarDown'>&nbsp;</div>"
+		}
+		else
+		{
+			sHTML = sHTML + "	<div class='divStockObjMeet'>&nbsp;</div>"
+		}
+		sHTML = sHTML + "	</div>";
+		if (parseFloat(stock.dayPrices[stock.dayPrices.length-1].percent) > 0)
+		{
+			sHTML = sHTML + "	<div class='divStockObjDelta'>+" + stock.dayPrices[stock.dayPrices.length-1].delta + " (+" + stock.dayPrices[stock.dayPrices.length-1].percent + "%)</div>"
+		}
+		else
+		{
+			sHTML = sHTML + "	<div class='divStockObjDelta'>" + stock.dayPrices[stock.dayPrices.length-1].delta + " (" + stock.dayPrices[stock.dayPrices.length-1].percent + "%)</div>"
+		}
+		sHTML = sHTML +		"<div class='divStockObjHighLow'>"
+		sHTML = sHTML + "		<div class='divStockObjHigh'>" + stock.high + "</div>"
+		sHTML = sHTML + "		<div class='divStockObjLow'>" + stock.low + "</div>"
+		sHTML = sHTML + "	</div>"
+		
+		sHTML = sHTML + "</div>"
+		
+		sHTML = sHTML + "</li>";
+	}
+	return sHTML;
+		
+}
 
 function showStockInfo(stockID){
 	var stock;
@@ -445,67 +525,22 @@ function showStockInfo(stockID){
 		}
 	}
 	var sHTML = "";
-	
-	if (parseFloat(stock.percent) > 5)
+	sHTML = sHTML + "<div class='divPopHeader'>";
+	sHTML = sHTML + "	<div class='divPopTitle'>" + stock.name + "(" + stock.code + ")</div>";
+	sHTML = sHTML + "	<div class='divPopClose' onclick='javascript:$(\"#divAlert\").fadeOut()'></div>";
+	sHTML = sHTML + "</div>";
+	sHTML = sHTML + "<div class='divPopContentRow'>";
+	if (isStockMonitor(stockID))
 	{
-		sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock5'>&nbsp;</div>"
-	}
-	else if (parseFloat(stock.percent) > 0)
-	{
-		sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock4'>&nbsp;</div>"
-	}
-	else if (parseFloat(stock.percent) == 0)
-	{
-		sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock3'>&nbsp;</div>"
-	}
-	else if (parseFloat(stock.percent) < -5)
-	{
-		sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock1'>&nbsp;</div>"
-	}
-	else if (parseFloat(stock.percent) < 0)
-	{
-		sHTML = sHTML + "	<div class='divStockObjTitle divTitleStock2'>&nbsp;</div>"
-	}
-	sHTML = sHTML + "	<div class='divStockObjCode'>" + stock.code + "</div>"
-	if (stock.meet != "")
-	{
-		sHTML = sHTML + "	<div class='divStockObjMeet'>" + stock.meet.substr(0, 2) + "<br/>" + stock.meet.substr(2) + "</div>"
-	}
-	sHTML = sHTML + "	<div class='divStockObjName'>" + stock.name + "</div>"
-	if (parseFloat(stock.percent) > 5)
-	{
-		sHTML = sHTML + "	<div class='divStockObjPrice divFontStock5'>" + stock.price + "</div>"
-	}
-	else if (parseFloat(stock.percent) > 0)
-	{
-		sHTML = sHTML + "	<div class='divStockObjPrice divFontStock4'>" + stock.price + "</div>"
-	}
-	else if (parseFloat(stock.percent) == 0)
-	{
-		sHTML = sHTML + "	<div class='divStockObjPrice divFontStock3'>" + stock.price + "</div>"
-	}
-	else if (parseFloat(stock.percent) < -5)
-	{
-		sHTML = sHTML + "	<div class='divStockObjPrice divFontStock1'>" + stock.price + "</div>"
-	}
-	else if (parseFloat(stock.percent) < 0)
-	{
-		sHTML = sHTML + "	<div class='divStockObjPrice divFontStock2'>" + stock.price + "</div>"
-	}
-	if (stock.percent > 0)
-	{
-		sHTML = sHTML + "	<div class='divStockObjDelta'>+" + stock.delta + " (+" + stock.percent + "%)</div>"
+		sHTML = sHTML + "	<input type='checkbox' onclick='javascript:setStockToMonitor(\"" + stockID + "\", this.checked)' checked>&nbsp;加到我的監察表";
 	}
 	else
 	{
-		sHTML = sHTML + "	<div class='divStockObjDelta'>" + stock.delta + " (" + stock.percent + "%)</div>"
+		sHTML = sHTML + "	<input type='checkbox' onclick='javascript:setStockToMonitor(\"" + stockID + "\", this.checked)'>&nbsp;加到我的監察表";
 	}
-	sHTML = sHTML +		"<div class='divStockObjHighLow'>"
-	sHTML = sHTML + "		<div class='divStockObjHigh'>" + stock.high + "</div>"
-	sHTML = sHTML + "		<div class='divStockObjLow'>" + stock.low + "</div>"
-	sHTML = sHTML + "	</div>"	
-	sHTML = sHTML + "</div>"
-	sHTML = sHTML + "<div class='divDetailsChart' style='background-image:url(http://charts.aastocks.com/servlet/Charts?com=50004&stockid=" + stock.code + ".HK&period=0&footerStyle=1&lang=1&scheme=0&height=160&width=160)'>&nbsp;</div>";
+	sHTML = sHTML + "</div>";
+	
+	sHTML = sHTML + "<div class='divDetailsChart' style='background-image:url(http://charts.aastocks.com/servlet/Charts?com=50004&stockid=" + stock.code + ".HK&period=0&footerStyle=1&lang=1&scheme=0&height=300&width=500)'>&nbsp;</div>";
 	sHTML = sHTML + "<div class='divDetailsAlertSetRow'><input type='checkbox' id='chkAlarmSet' onclick='javascript:showAlarmSetting(this.checked)'>自動提示 (+/- %)</div>"
 	sHTML = sHTML + "<div class='divDetailsAlertSet divDetailsAlertSetRow'><input type='number' id='txtAlarmValue' class='txtStockAlarm'></div>"
 	sHTML = sHTML + "<div class='divDetailsAlertSet divDetailsAlertSetRow'><input type='button' value='設定' class='btnStockAlarm' onclick='setStockAlarm(\"" + stock.code + "\")'></div>"
@@ -523,8 +558,45 @@ function showStockInfo(stockID){
 			}
 		}
 	});
+	$("#divAlertMsg").html(sHTML);
+	$("#divAlert").fadeIn();
 	
-	$(".divOverlayDetails").show('slide', {direction: 'right'}, 1000);
+}
+
+function setStockToMonitor(stockID, checked){
+	if (checked)
+	{
+		var isExist = false;
+		for(var i=0;i<stockMonitor.length;i++){
+			if (parseInt(stockMonitor[i]) == parseInt(stockID))
+			{
+				isExist = true;
+				break;
+			}
+		}
+		if (!isExist)
+		{
+			stockMonitor.push(stockID);
+			localStorage.setItem("stockMonitor", JSON.stringify(stockMonitor));
+			showStockGrid(stockPrices);
+			showMonitorGrid(stockMonitor);
+		}
+		
+	}
+	else
+	{
+		for(var i=0;i<stockMonitor.length;i++){
+			if (parseInt(stockMonitor[i]) == parseInt(stockID))
+			{
+				stockMonitor.splice(i,1);
+				localStorage.setItem("stockMonitor", JSON.stringify(stockMonitor));
+				showStockGrid(stockPrices);
+				showMonitorGrid(stockMonitor);
+				break;
+			}
+		}
+	}
+	
 	
 }
 
@@ -546,13 +618,25 @@ function setStockAlarm(stockID){
 			break;
 		}
 	}
-	localStorage.setItem("stockPrices", JSON.stringify(stockPrices));
+	//localStorage.setItem("stockPrices", JSON.stringify(stockPrices));
 	hideStockInfo();
 }
 
 
 function hideStockInfo(){
 	$(".divOverlayDetails").hide('slide', {direction: 'right'}, 1000);
+}
+
+function setStockMonitor(id){
+	var stockID = id.replace(/liStockObj_/g,""); 
+	var stockObj;
+	for (var i=0;i < stockPrices.length;i++ )
+	{
+		if (stockID == stockPrices[i].code)
+		{
+			stockObj = stockPrices[i];
+		}
+	}
 }
 
 function setStockArraySeq(id, idx){
@@ -568,4 +652,22 @@ function setStockArraySeq(id, idx){
 		}
 	}
 	stockPrices.splice((idx - 1), 0, stockObj);
+	localStorage.setItem("stockPrices", JSON.stringify(stockPrices));
 }
+
+function setMonitorArraySeq(id, idx){
+	console.log("new position --> " + idx);
+	var stockID = id.replace(/liStockObj_/g,""); 
+	var stockObj;
+	for (var i=0;i < stockMonitor.length;i++ )
+	{
+		if (stockID == stockMonitor[i])
+		{
+			stockObj = stockMonitor[i];
+			stockMonitor.splice(i,1);
+		}
+	}
+	stockMonitor.splice((idx - 1), 0, stockObj);
+	localStorage.setItem("stockMonitor", JSON.stringify(stockMonitor));
+}
+
